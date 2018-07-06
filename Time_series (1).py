@@ -1,8 +1,4 @@
 
-# coding: utf-8
-
-# In[177]:
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -13,24 +9,18 @@ from matplotlib.pyplot import rcParams
 rcParams['figure.figsize']=10,6
 
 
-# In[178]:
 
 dataset=pd.read_csv('AirPassengers.csv')
 dataset['Month']=pd.to_datetime(dataset['Month'],infer_datetime_format=True)
 indexed_dataset=dataset.set_index(['Month'])
 
 
-# In[179]:
-
 dataset.head(5)
 
 
-# In[180]:
 
 indexed_dataset.head(5)
 
-
-# In[182]:
 
 #plot graph
 plt.xlabel('Date')
@@ -39,7 +29,7 @@ plt.plot(indexed_dataset)
 plt.show()
 
 
-# In[183]:
+
 
 #Determining Rolling Statistics
 
@@ -89,20 +79,20 @@ def test_stationarity(timeseries):
 
 
 
-# In[185]:
+
 
 indexed_dataset.dropna(inplace=True)
 test_stationarity(indexed_dataset)
 
 
-# In[186]:
+
 
 #Non- Sationarity is clearly visible from Rolling Statistics,also from dickey fuller test since test statistics is greater than
 #critical value, NULL Hypthesis is not rejected 
 #so it needs to be converted to stationary so that AR,MA and ARIMA model can be applied to it
 
 
-# In[187]:
+
 
 #1st Transformation : - Taking Log of the dataset
 logged_dataset=np.log(indexed_dataset)
@@ -110,7 +100,7 @@ plt.plot(logged_dataset)
 plt.show()
 
 
-# In[188]:
+
 
 #2nd Transformation : - Subtracting Moving Average from the dataset
 
@@ -126,7 +116,7 @@ logged_datasetMINUSmoving_average.head(12)
 test_stationarity(logged_datasetMINUSmoving_average)
 
 
-# In[190]:
+
 
 #Now the data looks somewhat stationary
 #Using shift function :- Shifts the data by 1
@@ -134,7 +124,7 @@ temp=logged_dataset.shift()
 temp.head(10)
 
 
-# In[193]:
+:
 
 loggedShifted_dataset=logged_dataset-temp
 loggedShifted_dataset.dropna(inplace=True)
@@ -142,13 +132,13 @@ plt.plot(loggedShifted_dataset)
 plt.show()
 
 
-# In[194]:
+
 
 test_stationarity(loggedShifted_dataset)
 #This gives the stationary dataset
 
 
-# In[195]:
+
 
 
 #ACF : - AutoCorrelation Function, shows relation between time t and all previous intervals
@@ -196,7 +186,7 @@ plt.show()
 #Here P=Q=2
 
 
-# In[198]:
+
 
 #ARIMA_MODEL
 
@@ -209,7 +199,7 @@ plt.title('RSS:%.4f'%sum((results_ARIMA.fittedvalues-loggedShifted_dataset["#Pas
 plt.show()
 
 
-# In[199]:
+
 
 #RSS is residual sum square, the more is RSS, the bad is the model
 #For only AR Model, put Q=0
@@ -236,43 +226,46 @@ plt.plot(predicted_dataset)
 plt.show()
 
 
-# In[ ]:
-
-
-
-
-# In[202]:
 
 #If we wish to predict for next 10 years i.e. 120 months, we will add 120 rows to 144
 results_ARIMA.plot_predict(1,264)
 
 
-# In[203]:
+
 
 results_ARIMA.forecast(steps=120)
 
 
-# In[ ]:
 
 
 
 
-# In[ ]:
 
 
 
 
-# In[ ]:
 
 
 
 
-# In[ ]:
 
 
 
 
-# In[ ]:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
